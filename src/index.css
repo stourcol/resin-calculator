@@ -91,5 +91,9 @@ body {
 }
 
 .label-pro {
-  @apply block text-[10px] font-bold text-[var(--text-dim)] mb-2 uppercase tracking-widest;
+  @apply flex items-center gap-1.5 text-[10px] font-bold text-[var(--text-dim)] mb-2 uppercase tracking-widest;
+}
+
+.rounded-apple {
+  border-radius: 28px;
 }

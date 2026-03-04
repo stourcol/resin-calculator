@@ -20,7 +20,11 @@ export const translations = {
         language: 'Language',
         mixtureRatio: 'Mixture Ratio',
         ratio11: '1:1 (Equal parts)',
-        ratio12: '2:1 (Professional)'
+        ratio12: '2:1 (Professional)',
+        scaleMode: 'Scaling Mode',
+        adjustToDesign: 'Adjust to Design',
+        adjustToCanvas: 'Adjust to Canvas',
+        highlightArea: 'Highlight measured area'
     },
     es: {
         title: 'ResinCalc',
@@ -41,6 +45,10 @@ export const translations = {
         language: 'Idioma',
         mixtureRatio: 'Proporción de Mezcla',
         ratio11: '1:1 (Partes iguales)',
-        ratio12: '2:1 (Profesional)'
+        ratio12: '2:1 (Profesional)',
+        scaleMode: 'Modo de Escala',
+        adjustToDesign: 'Ajustar al Diseño',
+        adjustToCanvas: 'Ajustar al Lienzo',
+        highlightArea: 'Resaltar área medida'
     }
 };

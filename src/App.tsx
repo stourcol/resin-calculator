@@ -22,6 +22,8 @@ function App() {
   const [thickness, setThickness] = useState<number>(0.12);
   const [lang, setLang] = useState<Language>('es');
   const [mixtureRatio, setMixtureRatio] = useState<number>(2); // 1 = 1:1, 2 = 2:1
+  const [scaleMode, setScaleMode] = useState<'design' | 'canvas'>('design');
+  const [showDebug, setShowDebug] = useState<boolean>(false);
 
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
@@ -41,13 +43,18 @@ function App() {
   };
 
   const areaInCm2 = useMemo(() => {
-    if (!svgData || !svgData.objectViewBox.width || !svgData.objectViewBox.height) return 0;
+    if (!svgData) return 0;
     const w = realWidth || 0;
     const h = realHeight || 0;
-    const scaleX = w / svgData.objectViewBox.width;
-    const scaleY = h / svgData.objectViewBox.height;
+
+    const baseBox = scaleMode === 'design' ? svgData.objectViewBox : svgData.viewBox;
+
+    if (!baseBox.width || !baseBox.height) return 0;
+
+    const scaleX = w / baseBox.width;
+    const scaleY = h / baseBox.height;
     return svgData.totalAreaInSvgUnits * scaleX * scaleY;
-  }, [svgData, realWidth, realHeight]);
+  }, [svgData, realWidth, realHeight, scaleMode]);
 
   const totalVolume = useMemo(() => (areaInCm2 * (thickness || 0)), [areaInCm2, thickness]);
 
@@ -110,10 +117,28 @@ function App() {
                 <span className={`text-sm font-semibold ${svgData ? 'text-green-700 dark:text-green-300' : ''}`}>
                   {svgData ? 'Vector Cargado ✅' : t.uploadPrompt}
                 </span>
-                <span className={`text-[10px] mt-1 ${svgData ? 'text-green-600/70' : 'text-[var(--text-dim)]'}`}>
-                  {svgData ? 'Design processed successfully' : 'SVG format optimized'}
-                </span>
               </label>
+            </div>
+          </div>
+
+          {/* Scale Mode Toggle */}
+          <div className="space-y-2">
+            <span className="label-pro flex items-center gap-2"><Maximize size={12} /> Modo de Escala</span>
+            <div className="grid grid-cols-2 p-1 bg-[rgba(120,120,128,0.08)] rounded-xl">
+              <button
+                onClick={() => setScaleMode('design')}
+                className={`flex flex-col items-center py-2 px-1 rounded-lg transition-all ${scaleMode === 'design' ? 'bg-[var(--card-bg)] shadow-sm' : 'opacity-50 hover:opacity-100'}`}
+              >
+                <span className="text-[10px] font-bold">Ajustar al Diseño</span>
+                <span className="text-[8px] opacity-60">Usa los bordes del dibujo</span>
+              </button>
+              <button
+                onClick={() => setScaleMode('canvas')}
+                className={`flex flex-col items-center py-2 px-1 rounded-lg transition-all ${scaleMode === 'canvas' ? 'bg-[var(--card-bg)] shadow-sm' : 'opacity-50 hover:opacity-100'}`}
+              >
+                <span className="text-[10px] font-bold">Ajustar al Lienzo</span>
+                <span className="text-[8px] opacity-60">Usa el tamaño del SVG</span>
+              </button>
             </div>
           </div>
 
@@ -175,6 +200,19 @@ function App() {
               </div>
             </div>
           </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="show-debug"
+              checked={showDebug}
+              onChange={(e) => setShowDebug(e.target.checked)}
+              className="rounded border-[var(--border-color)] bg-[var(--card-bg)] text-primary focus:ring-primary"
+            />
+            <label htmlFor="show-debug" className="text-[10px] font-bold text-[var(--text-dim)] uppercase tracking-wider cursor-pointer select-none">
+              Resaltar área medida
+            </label>
+          </div>
         </section>
 
         {error && (
@@ -190,12 +228,24 @@ function App() {
         {/* SVG Viewport */}
         <section className="bg-card border border-[var(--border-color)] shadow-[var(--shadow-soft)] rounded-apple flex items-center justify-center relative overflow-hidden p-12">
           {svgData ? (
-            <div className="w-full h-full flex items-center justify-center animate-in zoom-in-95 duration-500">
+            <div className="w-full h-full flex items-center justify-center animate-in zoom-in-95 duration-500 relative">
               <svg
                 className="svg-preview"
                 viewBox={`${svgData.viewBox.x} ${svgData.viewBox.y} ${svgData.viewBox.width} ${svgData.viewBox.height}`}
                 dangerouslySetInnerHTML={{ __html: svgData.originalContent }}
               />
+              {showDebug && (
+                <svg
+                  className="absolute inset-0 pointer-events-none w-full h-full"
+                  viewBox={`${svgData.viewBox.x} ${svgData.viewBox.y} ${svgData.viewBox.width} ${svgData.viewBox.height}`}
+                >
+                  <g fill="rgba(255, 0, 0, 0.2)" stroke="#ff4444" strokeWidth={Math.max(svgData.viewBox.width, svgData.viewBox.height) / 200}>
+                    {svgData.paths.map((d, i) => (
+                      <path key={i} d={d} />
+                    ))}
+                  </g>
+                </svg>
+              )}
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4 text-[var(--text-dim)] animate-pulse">

@@ -8,7 +8,7 @@ interface ResinResultsProps {
 }
 
 export const ResinResults: React.FC<ResinResultsProps> = ({ totalVolume, lang, ratio }) => {
-  const DENSITY = 1.1;
+  const DENSITY = 1.0; // 1ml = 1g as requested by user
   const totalGrams = totalVolume * DENSITY;
 
   // Cálculo según el ratio
