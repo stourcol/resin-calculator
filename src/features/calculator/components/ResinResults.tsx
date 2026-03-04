@@ -44,23 +44,22 @@ Ratio: ${ratio === 1 ? '1:1' : '2:1'}
     <div className="flex flex-col gap-5">
       <div className="flex justify-between items-start sm:items-center gap-3">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-          <label className="text-[10px] font-bold text-[var(--text-dim)] uppercase tracking-[0.2em] whitespace-nowrap">
+          <label className="text-[8.5px] font-bold text-[var(--text-dim)] uppercase tracking-[0.2em] whitespace-nowrap">
             {t.requiredMixture}
           </label>
-          <div className="px-2.5 py-0.5 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary">
+          <div className="px-2 py-0.5 bg-primary/10 border border-primary/20 rounded-full text-[8.5px] font-black text-primary">
             {ratio === 1 ? '1:1' : '2:1'}
           </div>
         </div>
 
         <button
           onClick={copyToClipboard}
-          className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-[10px] font-bold transition-all duration-300 h-fit whitespace-nowrap ${copied
-            ? 'bg-green-500 text-white shadow-lg shadow-green-500/20 scale-95'
-            : 'bg-[var(--card-bg)] text-[var(--text)] border border-[var(--border-color)] hover:border-primary hover:text-primary shadow-sm active:scale-95'
-            }`}
+          className="flex items-center gap-2 px-3 py-1.5 bg-[rgba(120,120,128,0.08)] hover:bg-[rgba(120,120,128,0.12)] border border-[var(--border-color)] rounded-xl transition-all group"
         >
-          {copied ? <Check size={12} /> : <ClipboardCopy size={12} />}
-          <span>{copied ? t.copied : t.copyRecipe}</span>
+          {copied ? <Check size={12} className="text-green-500" /> : <ClipboardCopy size={12} className="text-[var(--text-dim)] group-hover:text-primary" />}
+          <span className="text-[9px] font-bold text-[var(--text-dim)] group-hover:text-[var(--text-main)]">
+            {copied ? t.copied : t.copyRecipe}
+          </span>
         </button>
       </div>
 
@@ -70,9 +69,10 @@ Ratio: ${ratio === 1 ? '1:1' : '2:1'}
           <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
             <Scale size={48} />
           </div>
-          <span className="flex items-center gap-1.5 text-[9px] font-bold text-[var(--text-dim)] uppercase tracking-widest mb-2">
-            <Zap size={10} className="text-yellow-500" /> {t.totalMass}
-          </span>
+          <div className="flex items-center gap-2 mb-2">
+            <Zap size={10} className="text-yellow-500 fill-yellow-500/20" />
+            <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest">{t.totalMass}</span>
+          </div>
           <div className="flex items-baseline gap-1">
             <span className="text-3xl font-black tracking-tighter">{totalGrams.toFixed(1)}</span>
             <span className="text-xs font-black text-[var(--text-dim)] opacity-40 italic">g</span>

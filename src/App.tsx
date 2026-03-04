@@ -269,7 +269,7 @@ function App() {
         {/* Right Panel: Viewport & Results */}
         <main className="grid grid-rows-[1fr_auto] gap-6 overflow-hidden h-full">
           {/* SVG Viewport */}
-          <section className="bg-card border border-[var(--border-color)] shadow-[var(--shadow-soft)] rounded-apple flex items-center justify-center relative overflow-hidden p-12">
+          <section className="bg-card border border-[var(--border-color)] shadow-[var(--shadow-soft)] rounded-apple flex items-center justify-center relative overflow-hidden p-4">
             {svgData ? (
               <div className="w-full h-full flex items-center justify-center animate-in zoom-in-95 duration-500 relative">
                 <svg
