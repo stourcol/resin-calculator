@@ -158,5 +158,10 @@ export const useSvgAnalyzer = () => {
     }
   }, []);
 
-  return { analyzeSvg, svgData, error };
+  const reset = useCallback(() => {
+    setSvgData(null);
+    setError(null);
+  }, []);
+
+  return { analyzeSvg, reset, svgData, error };
 };

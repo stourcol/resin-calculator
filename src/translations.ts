@@ -3,7 +3,7 @@ export type Language = 'en' | 'es';
 export const translations = {
     en: {
         title: 'ResinCalc',
-        subtitle: 'Precision Material Calculator',
+        subtitle: 'Resin calculation for regular and irregular shapes',
         vectorFile: 'Vector File (SVG)',
         realWidth: 'Real Width (cm)',
         realHeight: 'Real Height (cm)',
@@ -24,11 +24,14 @@ export const translations = {
         scaleMode: 'Scaling Mode',
         adjustToDesign: 'Adjust to Design',
         adjustToCanvas: 'Adjust to Canvas',
-        highlightArea: 'Highlight measured area'
+        highlightArea: 'Highlight measured area',
+        wastage: 'Wastage (%)',
+        copyRecipe: 'Copy Recipe',
+        copied: 'Copied!'
     },
     es: {
         title: 'ResinCalc',
-        subtitle: 'Calculadora de Precisión',
+        subtitle: 'Cálculo de resina para formas regulares e irregulares',
         vectorFile: 'Archivo Vectorial (SVG)',
         realWidth: 'Ancho Real (cm)',
         realHeight: 'Alto Real (cm)',
@@ -49,6 +52,9 @@ export const translations = {
         scaleMode: 'Modo de Escala',
         adjustToDesign: 'Ajustar al Diseño',
         adjustToCanvas: 'Ajustar al Lienzo',
-        highlightArea: 'Resaltar área medida'
+        highlightArea: 'Resaltar área medida',
+        wastage: 'Desperdicio (%)',
+        copyRecipe: 'Copiar Receta',
+        copied: '¡Copiado!'
     }
 };
